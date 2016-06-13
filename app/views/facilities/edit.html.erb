@@ -3,7 +3,11 @@
 <h1 style="text-align: center; margin-top: 50px; margin-bottom: -30px; font-weight: bold">Edit Facility</h1>
 
 <div class="profile">
-  <%= render 'form' %>
+  <% if (session[:user_id] == @facility.user_id) || (User.find(session[:user_id]).admin) %>
+    <%= render 'form' %>
+  <% else %>
+    <h2>You do not have permission to edit this facility</h2>
+  <% end %>
 </div>
 
 <%= content_tag :div, class: "temp_information", data: {jsfacility: @facility} do %>

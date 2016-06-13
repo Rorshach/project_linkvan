@@ -113,8 +113,9 @@ module FacilitiesHelper
    				content_arr += content_tag(:i, nil, class: "icon-hygiene_linkvan hygiene-colour-index")
    			when "Technology"
    				content_arr += content_tag(:i, nil, class: "icon-display technology-colour-index")
-   			else
+   			when "Advocacy"
    				content_arr += content_tag(:i, nil, class: "icon-Advocacy_linkvan legal-colour-index")
+			else
 
 			end #ends case
 		end
