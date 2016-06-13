@@ -12,37 +12,6 @@
 <% @imps = Array.new %>
 <% @facilitynames = Array.new %>
 
-<% if @user.admin %>
-  <div class="administered">
-    <h4><%= pluralize(@user.facilities.count, 'Facility') %> Available to Edit</h4>
-    <ul>
-      <% @user.facilities.each do |f| %>
-        <li><%= link_to f.name, edit_facility_path(f.id) %>  (Monthly View Count: <%= Impression.where(impressionable_id: f.id).count %>)</li>
-
-      <% @imps.concat(Impression.where(impressionable_id: f.id)) %>
-      <% @facilitynames.push(f.name) %>
-      <% end %>
-    </ul>
-  </div>
-
-
-<br>
-<div class="report">
- <!--Div that will hold the dashboard-->
-  <h4>Reports</h4>
-    <div id="dashboard_div">
-      <!--Divs that will hold each control and chart-->
-      
-      <div id="chart_div"></div>
-      <div id="filter_div"></div>
-    </div>
-
-
-    <div id="day_of_week_div"></div>
-
-    <div id="time_of_day_div"></div>
-  </div>
-
 <!--if @user.facilities.count > 0-->
 <% if @user.facilities.count > 0 %>
   <div class="administered">
