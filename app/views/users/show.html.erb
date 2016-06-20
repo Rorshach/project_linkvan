@@ -3,6 +3,9 @@
 
   <h1><%= @user.name %></h1>
   <h4><%= mail_to(@user.email) %></h4>
+  <% if @user.admin %>
+    <h4>Admin</h4>
+  <% end %>
 
 <h4>Registered Since <%= @user.created_at.strftime("%B %Y") %></h4>
 
