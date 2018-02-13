@@ -46,6 +46,7 @@ class UsersController < ApplicationController
       @user.update_attribute(:activation_email_sent, true)
   		if @user.save
         session[:user_id] = @user.id
+        UserMailer.test_welcome_email.deliver_now
     		redirect_to @user, notice: "Thanks for signing up!"
   		else
         flash.now[:error] = @user.errors.full_messages
