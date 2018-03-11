@@ -1,4 +1,4 @@
-APP_CONFIG = YAML.load_file(Rails.root.join('config','environments', 'mail_config.yml').to_s)
+# APP_CONFIG = YAML.load_file(Rails.root.join('config','environments', 'mail_config.yml').to_s)
 Linkvan::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
