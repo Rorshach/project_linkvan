@@ -91,6 +91,6 @@ config.action_mailer.smtp_settings = {
   :domain =>              'herokuapp.com/',
   :user_name =>            ENV['SENDGRID_USERNAME'],
   :password =>             ENV['SENDGRID_PASSWORD'],
-  :authentication =>       'plain',
+  :authentication =>       :plain,
   :enable_starttls_auto => true  }
 end

@@ -70,6 +70,7 @@ gem 'momentjs-rails'
 
 gem 'ckeditor'
 
+gem 'sendgrid'
 # Use unicorn as the app server
 # gem 'unicorn'
 
