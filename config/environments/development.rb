@@ -34,14 +34,14 @@ Linkvan::Application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-config.action_mailer.default_url_options = { :host => 'https://interstellar500.herokuapp.com/' }
+config.action_mailer.default_url_options = { :host => 'myapp.herokuapp.com' }
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
-    :address =>              'smtp.sendgrid.net',
+    :address =>              'smtp.gmail.com',
     :port =>                 '587',
-    :domain =>              'heroku.com',
-    :user_name =>            ENV['SENDGRID_USERNAME'],
-    :password =>             ENV['SENDGRID_PASSWORD'],
+    :domain =>              'myapp.herokuapp.com',
+    :user_name =>            ENV['GMAIL_USERNAME'],
+    :password =>             ENV['GMAIL_PASSWORD'],
     :authentication =>       :plain,
     :enable_starttls_auto => true  }
 end
