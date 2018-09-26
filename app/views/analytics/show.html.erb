@@ -5,6 +5,7 @@
         <h2><%= @user.name %></h2>
         <p><%= mail_to(@user.email) %></p>
         <p>Registered Since <%= @user.created_at.strftime("%B %Y") %></p>
+        <h3>Felix Test</h3>
 
         <%= render 'shared/admin_nav' %>
         <div class="data-view">
@@ -14,6 +15,7 @@
               <div class="inset-gmap">
                 <div id="analytics-map" style="height:600px;"></div>
               </div>
+              <h3>Felix Test ADMIN</h3>
               <!-- <%
                 service_chart = {
                   labels: ["Shelter", "Food", "Medical", "Hygiene", "Technology", "Legal", "Learning", "Crisis Lines"],
@@ -159,7 +161,10 @@
   </div>
 </section>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSLM-Bv5YwI1Ecw2OrMDQF8fZxik6FTzs"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSLM-Bv5YwI1Ecw2OrMDQF8fZxik6FTzs"></script>-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSLM-Bv5YwI1Ecw2OrMDQF8fZxik6FTzs"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
 <script>
   var map;
   // Lat and long for learning exchange
