@@ -70,7 +70,7 @@ gem 'momentjs-rails'
 
 gem 'ckeditor'
 
-gem 'delayed_job_active_record'
+gem 'resque'
 
 # Use unicorn as the app server
 # gem 'unicorn'
