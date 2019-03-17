@@ -8,7 +8,27 @@ class AnalyticsController < ApplicationController
   def show
     @user = User.find(params[:id])
     if (@user.admin)
-      @mapData = gridSort(Analytic.all, 0.001, 49.279869, -123.099512)
+      @radius = getRequestRadius()
+      @radius_field = getRequestRadiusField()
+      @services = request['services'] || []
+      @date_from = getRequestDateFrom()
+      @date_to = getRequestDateTo()
+
+      @analytics = Analytic.all
+
+      if (@services.count > 0) 
+        @analytics = @analytics.select {|item| @services.include? getServiceKey(item.service)}
+      end
+      if (@date_from)
+        @analytics = @analytics.select {|item| Date.parse(item.time.to_s.split(' ')[0]) >= @date_from}
+        @date_from = @date_from.strftime("%d/%m/%Y")
+      end
+      if (@date_to)
+        @analytics = @analytics.select {|item| Date.parse(item.time.to_s.split(' ')[0]) <= @date_to}
+        @date_to = @date_to.strftime("%d/%m/%Y")
+      end
+      
+      @coordinates = gridSort(@analytics, 0.001, 49.279869, -123.099512)
 
       @raw_service_chart_data = Analytic.group(:service).count
       @service_chart_data = []
@@ -32,6 +52,7 @@ class AnalyticsController < ApplicationController
         "Learning" => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         "Crisis Lines" => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       }
+      
       Analytic.order(:time).each do |data|
         puts data.service
         case data.service
@@ -65,42 +86,20 @@ class AnalyticsController < ApplicationController
     cLat = centerLat * remFactor
     cLng = centerLng * remFactor
     blocks = Hash.new
+    coordinates = Array.new
     data.each do |it|
       if (it.lat != 0 && it.long != 0)
-        itLat = it.lat * remFactor
-        latOffset = ((itLat - cLat) / size).floor
-        itLng = it.long * remFactor
-        lngOffset = ((itLng - cLng) / size).floor
-        if (blocks[latOffset] == nil)
-          newBlock = Hash.new
-          newBlock[lngOffset] = 1
-          blocks[latOffset] = newBlock
-        else
-          if (blocks[latOffset][lngOffset] == nil)
-            blocks[latOffset][lngOffset] = 1
-          else
-            blocks[latOffset][lngOffset] += 1
-          end
+        itCoord = [Float(it.lat), Float(it.long)]
+        areaCenter = [49.2776868, -123.0980439]
+        distance = Geocoder::Calculations.distance_between(areaCenter, itCoord)
+        distance = distance * 1.60934 # miles to km
+
+        if (distance < getRequestRadius() / 1000)
+          coordinates.push(itCoord)
         end
       end
     end
-    rectAry = Array.new
-    blocks.each do |latOffset, lngs|
-      lngs.each do |lngOffset, count|
-        lat = (latOffset * gridSize) + centerLat
-        lng = (lngOffset * gridSize) + centerLng
-        rect = {
-          "north" => lat + gridSize,
-          "south" => lat,
-          "east" => lng + gridSize,
-          "west" => lng,
-          "count" => count,
-          "fillColor" => getGridColor(count)
-        }
-        rectAry.push(rect)
-      end
-    end
-    return rectAry
+    return coordinates
   end
 
   def getGridColor(count)
@@ -111,5 +110,39 @@ class AnalyticsController < ApplicationController
       end
     end
     return MapColors[sortedKeys[sortedKeys.length - 1]]
+  end
+
+  def getRequestRadius()
+    return (request['radius'] && is_number?(request['radius'])) ? Float(request['radius']) * 1000 : 4000
+  end
+
+  def getRequestRadiusField()
+    return (request['radius'] && is_number?(request['radius'])) ? Float(request['radius']) : 4
+  end
+
+  def getRequestDateFrom()
+    return DateTime.parse(request['datefrom']) rescue nil
+  end
+
+  def getRequestDateTo()
+    return DateTime.parse(request['dateto']) rescue nil
+  end
+
+  def is_number? string
+    true if Float(string) rescue false
+  end
+
+  def getServiceKey(service)
+    mapToKeys = {
+      "Shelter" => "shelter",
+      "Food" => "food",
+      "Medical" => "medical",
+      "Hygiene" => "hygiene",
+      "Technology" => "technology",
+      "Legal" => "legal",
+      "Learning" => "learning",
+      "Crisis Lines" => "crisislines",
+    }
+    return mapToKeys[service] || service
   end
 end

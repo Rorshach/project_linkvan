@@ -25,4 +25,102 @@
 			max-width: 360px;
 		}
 	}
+
+	.admin-view {
+		margin-bottom: 25px;
+	}
+
+	ul.user-info, ul.user-facilities {
+		padding: 10px;
+		margin: 0;
+		list-style: none;
+		display: flex;
+
+		li {
+			flex: 1;
+
+			&:last-child {
+				text-align: right;
+			}
+		}
+	}
+
+	ul.user-info {
+		border-bottom: 2px solid #e9ecef;
+		background: #f7f7f9;
+	}
+
+	ul.user-facilities {
+		border-bottom: 1px solid #e9ecef;
+
+		li:first-child {
+			padding-left: 30px;
+		}
+  }
+  
+  form.heatmap {
+    margin-bottom: 20px;
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+  }
+
+  .form-switch {
+    display: inline-block;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .form-switch i {
+    position: relative;
+    display: inline-block;
+    margin-right: .5rem;
+    width: 46px;
+    height: 26px;
+    background-color: #e6e6e6;
+    border-radius: 23px;
+    vertical-align: text-bottom;
+    transition: all 0.3s linear;
+  }
+
+  .form-switch i::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 42px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+    transition: all 0.25s linear;
+  }
+
+  .form-switch i::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    background-color: #fff;
+    border-radius: 11px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+    transform: translate3d(2px, 2px, 0);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-switch:active i::after {
+    width: 28px;
+    transform: translate3d(2px, 2px, 0);
+  }
+
+  .form-switch:active input:checked + i::after { transform: translate3d(16px, 2px, 0); }
+
+  .form-switch input { display: none; }
+
+  .form-switch input:checked + i { background-color: #4BD763; }
+
+  .form-switch input:checked + i::before { transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0); }
+
+  .form-switch input:checked + i::after { transform: translate3d(22px, 2px, 0); }
 }

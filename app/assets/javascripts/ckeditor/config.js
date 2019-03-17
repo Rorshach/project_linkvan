@@ -1,4 +1,4 @@
-CKEDITOR.config.toolbar= [
+CKEDITOR.config.toolbar = [
 	{ name: 'clipboard', items : [ 'Undo','Redo' ] },
 	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','-','RemoveFormat' ] },
 	{ name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Blockquote',

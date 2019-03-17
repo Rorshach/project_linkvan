@@ -19,7 +19,7 @@
 //= require js.cookie.js
 //= require moment
 //= require Chart.min
-//= require ckeditor/init
+//= require ckeditor-jquery
 //= require_tree ./ckeditor
 
 $(document).ready(function () {

@@ -8,6 +8,11 @@ class FacilitiesController < ApplicationController
     @facilities = Facility.all
     @alert = Alert.where(active: true).first
     @notices = Notice.where(published: true)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @facilities.to_csv, filename: "facilities-#{Date.today}.csv" }
+    end
   end
 
 
@@ -191,7 +196,7 @@ class FacilitiesController < ApplicationController
 
   def directions
     @facility = Facility.find(params[:id])
-    if session[:current_data] >= 0
+    if session[:current_data].present?
       @analytic = Analytic.find(session[:current_data])
       @analytic.dirClicked = true
       @analytic.dirType = "Walking"
@@ -223,8 +228,8 @@ class FacilitiesController < ApplicationController
       add_breadcrumb session['facilities_category'], session['facilities_list']
     end
     add_breadcrumb @facility.name
-
-    if session[:current_data] != nil && session[:current_data] >= 0
+    
+    if session[:current_data].present?
       @analytic = Analytic.find(session[:current_data])
       @analytic.facility = @facility.id
       @analytic.save
@@ -240,13 +245,11 @@ class FacilitiesController < ApplicationController
     @facility = Facility.find(params[:id])
     if @facility.verified == true
       @facility.update_attribute(:verified, false)
-      @facility.save
-      redirect_to @current_user, notice: "Facility not verified"
     else
       @facility.update_attribute(:verified, true)
-      @facility.save
-      redirect_to @current_user, notice: "Facility verified"
     end
+    @facility.save
+    render json: {verified: @facility.verified}
   end
 
 	def edit

@@ -14,7 +14,7 @@ group :development, :test do
 end
 
 group :production do
-	gem "pg"
+	gem 'pg', '~> 0.20'
 end
 
 # Use SCSS for stylesheets
@@ -68,7 +68,7 @@ gem 'chartjs-ror'
 
 gem 'momentjs-rails'
 
-gem 'ckeditor'
+gem 'ckeditor_rails'
 
 # Use unicorn as the app server
 # gem 'unicorn'

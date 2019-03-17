@@ -1,6 +1,8 @@
 Linkvan::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.assets.precompile += ['ckeditor/*']
+
   # Code is not reloaded between requests.
   config.cache_classes = false
 
@@ -29,7 +31,7 @@ Linkvan::Application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -42,7 +44,7 @@ Linkvan::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
